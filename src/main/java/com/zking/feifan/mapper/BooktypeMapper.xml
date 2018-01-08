@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zking.feifan.mapper.BooktypeMapper">
+    <resultMap id="BaseResultMap" type="com.zking.feifan.model.Booktype">
+        <constructor>
+            <idArg column="booktypeId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="booktypeName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="sort" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    booktypeId, booktypeName, sort
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_booktype
+        where booktypeId = #{booktypeid,jdbcType=INTEGER}
+    </select>
+    <select id="list" resultType="com.zking.feifan.model.Booktype"
+            parameterType="com.zking.feifan.model.Booktype">
+        SELECT *
+        FROM t_booktype
+        WHERE 1=1
+        <if test="booktypeid != null">
+            AND booktypeId = #{booktypeid,jdbcType=INTEGER}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_booktype
+    where booktypeId = #{booktypeid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.zking.feifan.model.Booktype">
+    insert into t_booktype (booktypeId, booktypeName, sort
+      )
+    values (#{booktypeid,jdbcType=INTEGER}, #{booktypename,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.zking.feifan.model.Booktype">
+        insert into t_booktype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="booktypeid != null">
+                booktypeId,
+            </if>
+            <if test="booktypename != null">
+                booktypeName,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="booktypeid != null">
+                #{booktypeid,jdbcType=INTEGER},
+            </if>
+            <if test="booktypename != null">
+                #{booktypename,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zking.feifan.model.Booktype">
+        update t_booktype
+        <set>
+            <if test="booktypename != null">
+                booktypeName = #{booktypename,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+        </set>
+        where booktypeId = #{booktypeid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zking.feifan.model.Booktype">
+    update t_booktype
+    set booktypeName = #{booktypename,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER}
+    where booktypeId = #{booktypeid,jdbcType=INTEGER}
+  </update>
+</mapper>
